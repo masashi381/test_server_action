@@ -39,7 +39,7 @@ const PostPage = async ({ params }: PostPageProps) => {
   return (
     <form action={updatePost}>
       <input type="hidden" name="id" value={post.id} />
-      <input type="text" name="name" placeholder="type Name" defaultValue={post.name} />
+      <input type="text" name="name" placeholder="type Name" defaultValue={post.name} className="text-black" />
       <button type="submit">Update</button>
     </form>
   );
