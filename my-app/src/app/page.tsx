@@ -10,6 +10,19 @@ const createPost = async (formData: FormData) => {
   await prisma.post.create({ data: { name } });
   revalidatePath("/");
 };
+
+const deletePost = async (id: string) => {
+  "use server";
+
+  await prisma.post.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath("/");
+};
+
 const Home = async () => {
   const posts = await prisma.post.findMany();
 
@@ -26,8 +39,11 @@ const Home = async () => {
           <li key={post.id} className="flex items-center gap-x-4">
             <div>{post.name}</div>
             <div className="flex items-center">
-              <Link href={`/posts/${post.id}`}>Go To</Link>| {""}
-              <Link href={`/posts/${post.id}/edit`}>Edit</Link>
+              <Link href={`/posts/${post.id}`}>Go To</Link> | {""}
+              <Link href={`/posts/${post.id}/edit`}>Edit</Link> | {""}
+              <form action={deletePost.bind(null, post.id)}>
+                <button type="submit">Delete</button>
+              </form>
             </div>
           </li>
         ))}
