@@ -29,14 +29,3 @@ export const updateUser = async (formData: FormData) => {
   revalidatePath("/");
   redirect("/");
 };
-export const deleteUser = async (id: string) => {
-  "use server";
-
-  await prisma.user.delete({
-    where: {
-      id,
-    },
-  });
-
-  revalidatePath("/");
-};
