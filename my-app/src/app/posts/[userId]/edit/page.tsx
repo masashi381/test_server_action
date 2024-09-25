@@ -9,7 +9,7 @@ const updatePost = async (formData: FormData) => {
   const name = formData.get("name") as string;
   console.log("get id: " + id);
 
-  await prisma.post.update({
+  await prisma.user.update({
     where: {
       id,
     },
@@ -23,25 +23,25 @@ const updatePost = async (formData: FormData) => {
 
 type PostPageProps = {
   params: {
-    postId: string;
+    userId: string;
   };
 };
 
 const PostPage = async ({ params }: PostPageProps) => {
-  const post = await prisma.post.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
-      id: params.postId,
+      id: params.userId,
     },
   });
 
-  if (!post) {
+  if (!user) {
     return notFound();
   }
 
   return (
     <form action={updatePost}>
-      <input type="hidden" name="id" value={post.id} />
-      <input type="text" name="name" placeholder="type Name" defaultValue={post.name} className="text-black" />
+      <input type="hidden" name="id" value={user.id} />
+      <input type="text" name="name" placeholder="type Name" defaultValue={user.name} className="text-black" />
       <button type="submit">Update</button>
     </form>
   );

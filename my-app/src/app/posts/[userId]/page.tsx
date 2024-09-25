@@ -3,21 +3,21 @@ import { prisma } from "@/lib/prisma";
 
 type PostPageProps = {
   params: {
-    postId: string;
+    userId: string;
   };
 };
 
 const PostPage = async ({ params }: PostPageProps) => {
-  const post = await prisma.post.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
-      id: params.postId,
+      id: params.userId,
     },
   });
 
-  if (!post) {
+  if (!user) {
     return notFound();
   }
-  return <h2>{post.name}</h2>;
+  return <h2>{user.name}</h2>;
 };
 
 export default PostPage;

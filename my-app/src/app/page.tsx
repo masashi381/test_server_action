@@ -7,14 +7,14 @@ const createPost = async (formData: FormData) => {
 
   const name = formData.get("name") as string;
 
-  await prisma.post.create({ data: { name } });
+  await prisma.user.create({ data: { name } });
   revalidatePath("/");
 };
 
 const deletePost = async (id: string) => {
   "use server";
 
-  await prisma.post.delete({
+  await prisma.user.delete({
     where: {
       id,
     },
@@ -24,7 +24,7 @@ const deletePost = async (id: string) => {
 };
 
 const Home = async () => {
-  const posts = await prisma.post.findMany();
+  const users = await prisma.user.findMany();
 
   return (
     <div className="p-4 flex flex-col gap-y-4">
@@ -35,13 +35,13 @@ const Home = async () => {
         <button type="submit">Create</button>
       </form>
       <ul className="flex flex-col gap-y-2">
-        {posts.map((post) => (
-          <li key={post.id} className="flex items-center gap-x-4">
-            <div>{post.name}</div>
+        {users.map((user) => (
+          <li key={user.id} className="flex items-center gap-x-4">
+            <div>{user.name}</div>
             <div className="flex items-center">
-              <Link href={`/posts/${post.id}`}>Go To</Link> | {""}
-              <Link href={`/posts/${post.id}/edit`}>Edit</Link> | {""}
-              <form action={deletePost.bind(null, post.id)}>
+              <Link href={`/posts/${user.id}`}>Go To</Link> | {""}
+              <Link href={`/posts/${user.id}/edit`}>Edit</Link> | {""}
+              <form action={deletePost.bind(null, user.id)}>
                 <button type="submit">Delete</button>
               </form>
             </div>
