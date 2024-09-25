@@ -16,20 +16,6 @@ const page = async () => {
         <button type="submit">Create</button>
       </form>
       <Lists users={users} deleteUserAction={deleteUser} />
-      {/* <ul className="flex flex-col gap-y-2">
-        {users.map((user) => (
-          <li key={user.id} className="flex items-center gap-x-4">
-            <div>{user.name}</div>
-            <div className="flex items-center">
-              <Link href={`/posts/${user.id}`}>Go To</Link> | {""}
-              <Link href={`/posts/${user.id}/edit`}>Edit</Link> | {""}
-              <form action={deleteUser.bind(null, user.id)}>
-                <button type="submit">Delete</button>
-              </form>
-            </div>
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 };
