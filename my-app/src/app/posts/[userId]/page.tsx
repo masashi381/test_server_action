@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import Detail from "./components/detail";
 
 type PostPageProps = {
   params: {
@@ -17,7 +18,11 @@ const PostPage = async ({ params }: PostPageProps) => {
   if (!user) {
     return notFound();
   }
-  return <h2>{user.name}</h2>;
+  return (
+    <>
+      <Detail name={user.name} />
+    </>
+  );
 };
 
 export default PostPage;
