@@ -1,23 +1,28 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import Detail from "./components/detail";
 
 type PostPageProps = {
   params: {
-    postId: string;
+    userId: string;
   };
 };
 
 const PostPage = async ({ params }: PostPageProps) => {
-  const post = await prisma.post.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
-      id: params.postId,
+      id: params.userId,
     },
   });
 
-  if (!post) {
+  if (!user) {
     return notFound();
   }
-  return <h2>{post.name}</h2>;
+  return (
+    <>
+      <Detail name={user.name} />
+    </>
+  );
 };
 
 export default PostPage;
