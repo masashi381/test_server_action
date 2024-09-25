@@ -1,27 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { revalidatePath } from "next/cache";
-
-const createPost = async (formData: FormData) => {
-  "use server";
-
-  const name = formData.get("name") as string;
-
-  await prisma.user.create({ data: { name } });
-  revalidatePath("/");
-};
-
-const deletePost = async (id: string) => {
-  "use server";
-
-  await prisma.user.delete({
-    where: {
-      id,
-    },
-  });
-
-  revalidatePath("/");
-};
+import { createUser, deleteUser } from "@/server_action/serverAction";
 
 const Home = async () => {
   const users = await prisma.user.findMany();
@@ -30,7 +9,7 @@ const Home = async () => {
     <div className="p-4 flex flex-col gap-y-4">
       <h2>Home</h2>
 
-      <form action={createPost} className="flex flex-col gap-y-2">
+      <form action={createUser} className="flex flex-col gap-y-2">
         <input type="text" name="name" placeholder="Please type name" className="text-black" />
         <button type="submit">Create</button>
       </form>
@@ -41,7 +20,7 @@ const Home = async () => {
             <div className="flex items-center">
               <Link href={`/posts/${user.id}`}>Go To</Link> | {""}
               <Link href={`/posts/${user.id}/edit`}>Edit</Link> | {""}
-              <form action={deletePost.bind(null, user.id)}>
+              <form action={deleteUser.bind(null, user.id)}>
                 <button type="submit">Delete</button>
               </form>
             </div>
